@@ -27,12 +27,12 @@
 # ==> execute Inventory command as root
 - name: Execute Inventoty root command
   command: '{{ inventory_location }}/orainstRoot.sh'
-  sudo_user: root
+  become: yes
 
 # ==> execute DB home command as root
 - name: Execute DB home rfoot command
   command: '{{ oracle_home }}/root.sh'
-  sudo_user: root
+  become: yes
 
 # ==> TODO: Create a new role for creating the database
 # ==> Create Listener TODO: Parameterize port, name etc
@@ -59,20 +59,20 @@
 
 - name: change oratab
   lineinfile: dest='/etc/oratab' regexp='^{{ oracle_sid }}:{{ oracle_home }}:N' line='{{ oracle_sid }}:{{ oracle_home }}:Y'
-  sudo_user: root
+  become: yes
 
 - name: copy init.d oracle script to /etc/init.d
   template: src=oradb.j2 dest=/etc/init.d/oradb mode=750
-  sudo_user: root
+  become: yes
 
 - name: enable oradb script to run at startup
   command: 'chkconfig --add oradb'
-  sudo_user: root
+  become: yes
 
 # You can remove it for non vagrant server.
 #- name: reboot vagrant virtual machine
 #  local_action: shell vagrant reload
-#  sudo_user: '{{ host_username }}'
+#  become_user: '{{ host_username }}'
 #  ignore_errors: yes
 #  tags:
 #    - reboot-vagrant
