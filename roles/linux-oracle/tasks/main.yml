@@ -23,7 +23,8 @@
   group: name={{ item }} state=present
   with_items: extra_groups
 - name: Create user
-  user: name={{ oracle_user }} group={{ oracle_install_group }} password={{ oracle_os_user_pass }}
+  user: name={{ oracle_user }} group={{ oracle_install_group }}
+          password={{ oracle_os_user_pass }} home={{ oracle_user_home_dir }}
 - name: Add extra groups
   user: name={{ oracle_user }} groups={{ item }} append=yes
   with_items: extra_groups

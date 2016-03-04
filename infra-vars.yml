@@ -1,4 +1,5 @@
 oracle_user: oracle
+oracle_user_home_dir: "/home/{{ oracle_user }}"
 oracle_install_group: oinstall
 extra_groups:
   - dba
